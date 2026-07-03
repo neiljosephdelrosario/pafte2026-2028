@@ -17,7 +17,7 @@ const navItems = [
   },
   {
     label: "Committees",
-    href: "/conferences",
+    href: "/committees",
   },
   {
     label: "Work & Financial Plan",

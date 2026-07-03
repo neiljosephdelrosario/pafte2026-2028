@@ -1,6 +1,7 @@
+// app/conferences/page.tsx
 import Image from "next/image";
 
-export default function CommitteesPage() {
+export default function ConferencesPage() {
   return (
     <div className="bg-[#FAF7F2] min-h-screen">
       {/* Header Banner */}
@@ -19,7 +20,7 @@ export default function CommitteesPage() {
           <div className="p-6 md:p-8">
             <div className="mb-4">
               <p className="text-[#C9A84C] font-semibold text-sm uppercase tracking-widest mb-1">PAFTE Committees</p>
-              <h2 className="font-display text-2xl font-bold text-[#0B1F4B]"> Committee Members</h2>
+              <h2 className="font-display text-2xl font-bold text-[#0B1F4B]">Committee Members</h2>
             </div>
             <div className="relative w-full rounded-xl overflow-hidden border border-[#E8E0D4] bg-[#FAF7F2]">
               <Image
