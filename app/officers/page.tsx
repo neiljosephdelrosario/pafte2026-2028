@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { X, Maximize2, Minimize2 } from "lucide-react";
@@ -200,7 +200,8 @@ const regionalChapters: Record<string, { role: string; name: string; institution
   ],
 };
 
-export default function OfficersPage() {
+// Main component that uses useSearchParams
+function OfficersContent() {
   const searchParams = useSearchParams();
   const regionParam = searchParams.get("region");
   const tabParam = searchParams.get("tab");
@@ -461,5 +462,18 @@ export default function OfficersPage() {
         </section>
       )}
     </div>
+  );
+}
+
+// Main page component with Suspense boundary
+export default function OfficersPage() {
+  return (
+    <Suspense fallback={
+      <div className="bg-[#FAF7F2] min-h-screen flex items-center justify-center">
+        <div className="text-[#0B1F4B] text-lg font-medium">Loading officers...</div>
+      </div>
+    }>
+      <OfficersContent />
+    </Suspense>
   );
 }
