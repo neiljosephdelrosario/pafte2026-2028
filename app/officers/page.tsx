@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { X, Maximize2, Minimize2 } from "lucide-react";
+import { X, Maximize2, Minimize2, Users, MapPin, Award, ChevronRight, Calendar, Star, Sparkles } from "lucide-react";
 
 // 2. REGIONAL ASSIGNED POSITIONS
 const regionalChapters: Record<string, { role: string; name: string; institution: string }[]> = {
@@ -254,86 +254,142 @@ function OfficersContent() {
     };
   }, [isZoomed]);
 
+  // Helper function to get region display name
+  const getRegionDisplayName = (region: string) => {
+    const names: Record<string, string> = {
+      "CAR": "Cordillera Administrative Region",
+      "NCR": "National Capital Region",
+      "NIR": "Negros Island Region",
+      "Region I": "Ilocos Region",
+      "Region III": "Central Luzon",
+      "Region IV-A": "CALABARZON",
+      "Region IV-B": "MIMAROPA",
+      "Region V": "Bicol Region",
+      "Region VI": "Western Visayas",
+      "Region VII": "Central Visayas",
+      "Region VIII": "Eastern Visayas",
+      "Region IX": "Zamboanga Peninsula",
+      "Region X": "Northern Mindanao",
+      "Region XI": "Davao Region",
+      "Region XII": "SOCCSKSARGEN",
+      "Region XIII": "CARAGA",
+    };
+    return names[region] || region;
+  };
+
   return (
-    <div className="bg-[#FAF7F2] min-h-screen">
-      {/* Header Banner */}
-      <section className="bg-[#0B1F4B] py-20">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <p className="text-[#C9A84C] text-sm font-semibold uppercase tracking-widest mb-3">Leadership</p>
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-white mb-4">2026–2028 Officers </h1>
-          <p className="text-white/60 text-base md:text-lg max-w-2xl mx-auto">
+    <div className="bg-white min-h-screen">
+
+      {/* Modern Header Banner */}
+      <section className="relative bg-gradient-to-br from-[#0B1F4B] via-[#0F2A5E] to-[#1A3D7A] overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-20 right-20 w-72 h-72 rounded-full bg-[#C9A84C] blur-3xl animate-pulse" />
+          <div className="absolute bottom-20 left-20 w-96 h-96 rounded-full bg-[#C9A84C] blur-3xl animate-pulse delay-1000" />
+        </div>
+        <div className="absolute inset-0 opacity-5" style={{
+          backgroundImage: "radial-gradient(circle at 1px 1px, #C9A84C 1px, transparent 0)",
+          backgroundSize: "40px 40px"
+        }} />
+        
+        <div className="relative max-w-5xl mx-auto px-4 py-24 md:py-28 text-center">
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 mb-6">
+            <span className="w-2 h-2 bg-[#C9A84C] rounded-full animate-ping" />
+            <span className="text-white/80 text-sm font-medium">Leadership</span>
+          </div>
+          <h1 className="font-display text-4xl md:text-6xl font-bold text-white mb-4 leading-tight">
+            2026–2028{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C9A84C] to-[#E8C96A]">Officers</span>
+          </h1>
+          <p className="text-white/60 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
             Formally inducted executive officers and regional council members driving excellence in teacher education.
           </p>
+          <div className="flex flex-wrap justify-center gap-3 mt-6">
+            <span className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 text-white/50 text-sm">
+              <Calendar size={14} className="text-[#C9A84C]" />
+              Term 2026–2028
+            </span>
+            <span className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 text-white/50 text-sm">
+              <Award size={14} className="text-[#C9A84C]" />
+              National &amp; Regional
+            </span>
+          </div>
         </div>
       </section>
       
-      <div className="h-1 bg-[#C9A84C]" />
+      <div className="h-1.5 bg-gradient-to-r from-transparent via-[#C9A84C] to-transparent" />
 
-      {/* Tab Navigation */}
+      {/* Tab Navigation - Modern */}
       <div className="max-w-6xl mx-auto px-4 pt-8">
-        <div className="flex gap-2 bg-white rounded-xl p-1 border border-[#E8E0D4] shadow-sm max-w-md mx-auto">
-          <button
-            onClick={() => setActiveTab("national")}
-            className={`flex-1 px-6 py-2.5 rounded-lg font-medium text-sm transition-all ${
-              activeTab === "national"
-                ? "bg-[#0B1F4B] text-white shadow-sm"
-                : "text-[#0B1F4B] hover:bg-[#EBF2FA]"
-            }`}
-          >
-            National Officers
-          </button>
-          <button
-            onClick={() => setActiveTab("regional")}
-            className={`flex-1 px-6 py-2.5 rounded-lg font-medium text-sm transition-all ${
-              activeTab === "regional"
-                ? "bg-[#0B1F4B] text-white shadow-sm"
-                : "text-[#0B1F4B] hover:bg-[#EBF2FA]"
-            }`}
-          >
-            Regional Officers
-          </button>
+        <div className="bg-[#FAF7F2] rounded-2xl p-1.5 border border-gray-100 shadow-lg max-w-md mx-auto">
+          <div className="flex gap-1">
+            <button
+              onClick={() => setActiveTab("national")}
+              className={`flex-1 px-6 py-3 rounded-xl font-semibold text-sm transition-all ${
+                activeTab === "national"
+                  ? "bg-gradient-to-r from-[#0B1F4B] to-[#1A3D7A] text-white shadow-lg"
+                  : "text-[#0B1F4B] hover:bg-white/50"
+              }`}
+            >
+              National Officers
+            </button>
+            <button
+              onClick={() => setActiveTab("regional")}
+              className={`flex-1 px-6 py-3 rounded-xl font-semibold text-sm transition-all ${
+                activeTab === "regional"
+                  ? "bg-gradient-to-r from-[#0B1F4B] to-[#1A3D7A] text-white shadow-lg"
+                  : "text-[#0B1F4B] hover:bg-white/50"
+              }`}
+            >
+              Regional Officers
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* National Officers Section */}
+      {/* National Officers Section - Modern */}
       {activeTab === "national" && (
         <section className="max-w-6xl mx-auto px-4 py-8">
-          <div className="bg-white rounded-2xl p-4 md:p-6 border border-[#E8E0D4] shadow-sm">
-            <div className="flex justify-between items-center mb-4">
+          <div className="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-shadow duration-500">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
               <div>
-                <p className="text-[#C9A84C] font-semibold text-sm uppercase tracking-widest mb-1">Executive Administration</p>
-                <h2 className="font-display text-2xl font-bold text-[#0B1F4B]">National Officers 2026–2028</h2>
+                <span className="inline-block px-4 py-1.5 bg-[#C9A84C]/10 text-[#C9A84C] text-sm font-semibold rounded-full mb-2">Executive Administration</span>
+                <h2 className="font-display text-2xl md:text-3xl font-bold text-[#0B1F4B]">National Officers 2026–2028</h2>
               </div>
               <button
                 onClick={() => setIsZoomed(true)}
-                className="p-2 rounded-lg hover:bg-[#EBF2FA] transition-colors text-[#0B1F4B] flex items-center gap-2"
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#0B1F4B] hover:bg-[#C9A84C] text-white hover:text-[#0B1F4B] rounded-xl transition-all font-medium shadow-lg shadow-[#0B1F4B]/20 hover:scale-105"
                 aria-label="Zoom in"
               >
                 <Maximize2 size={18} />
-                <span className="text-sm font-medium hidden sm:inline">Zoom</span>
+                <span className="text-sm">View Full Image</span>
               </button>
             </div>
             <div 
-              className="relative w-full aspect-[3/2] md:aspect-[16/9] rounded-xl overflow-hidden border border-[#E8E0D4] bg-[#FAF7F2] cursor-pointer"
+              className="relative w-full aspect-[3/2] md:aspect-[16/9] rounded-2xl overflow-hidden border border-gray-200 bg-[#FAF7F2] cursor-pointer group"
               onClick={() => setIsZoomed(true)}
             >
               <Image
                 src="/national officers.jpg"
                 alt="PAFTE National Officers 2026-2028"
                 fill
-                className="object-contain hover:scale-105 transition-transform duration-300"
+                className="object-contain group-hover:scale-105 transition-transform duration-500"
                 priority
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
-            <p className="text-center text-xs text-gray-400 mt-3">Click the image to zoom in</p>
+            <p className="text-center text-xs text-gray-400 mt-4 flex items-center justify-center gap-2">
+              <Sparkles size={12} className="text-[#C9A84C]" />
+              Click the image to zoom in
+              <Sparkles size={12} className="text-[#C9A84C]" />
+            </p>
           </div>
         </section>
       )}
 
-      {/* Zoom Modal */}
+      {/* Zoom Modal - Modern */}
       {isZoomed && (
         <div 
-          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4 backdrop-blur-sm"
           onClick={() => setIsZoomed(false)}
         >
           <div 
@@ -342,18 +398,12 @@ function OfficersContent() {
           >
             <button
               onClick={() => setIsZoomed(false)}
-              className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+              className="absolute top-4 right-4 z-10 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all hover:scale-110 border border-white/10"
               aria-label="Close zoom"
             >
               <X size={28} />
             </button>
-            <button
-              onClick={() => setIsZoomed(false)}
-              className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-white text-sm transition-colors"
-            >
-              Click anywhere or press ESC to close
-            </button>
-            <div className="relative w-full h-[85vh] rounded-xl overflow-hidden">
+            <div className="relative w-full h-[85vh] rounded-2xl overflow-hidden shadow-2xl">
               <Image
                 src="/national officers.jpg"
                 alt="PAFTE National Officers 2026-2028 (Zoomed)"
@@ -362,77 +412,56 @@ function OfficersContent() {
                 priority
               />
             </div>
+            <p className="text-center text-white/40 text-sm mt-4">
+              Click anywhere or press ESC to close
+            </p>
           </div>
         </div>
       )}
 
-      {/* Regional Chapters Section */}
+      {/* Regional Chapters Section - Modern */}
       {activeTab === "regional" && (
-        <section id="regional" className="bg-[#EBF2FA] py-16 border-t border-[#E8E0D4]">
-          <div className="max-w-6xl mx-auto px-4">
+        <section id="regional" className="py-16 bg-gradient-to-b from-white to-[#FAF7F2] border-t border-gray-100">
+          <div className="max-w-7xl mx-auto px-4">
             <div className="mb-10">
-              <p className="text-[#C9A84C] font-semibold text-sm uppercase tracking-widest mb-1">Local Jurisdictions</p>
-              <h2 className="font-display text-3xl font-bold text-[#0B1F4B]">Regional Council Representatives</h2>
+              <span className="inline-block px-4 py-1.5 bg-[#C9A84C]/10 text-[#C9A84C] text-sm font-semibold rounded-full mb-2">Local Jurisdictions</span>
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-[#0B1F4B]">Regional Council Representatives</h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-[#C9A84C] to-[#E8C96A] mt-3 rounded-full" />
             </div>
 
             <div className="grid lg:grid-cols-4 gap-8 items-start">
-              {/* Left Column: Regional Selectors Tab */}
+              {/* Left Column: Regional Selectors Tab - Modern */}
               <div className="flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-x-visible pb-3 lg:pb-0 scrollbar-none snap-x">
                 {Object.keys(regionalChapters).map((region) => (
                   <button
                     key={region}
                     onClick={() => setActiveRegion(region)}
-                    className={`snap-center shrink-0 text-left px-4 py-3 rounded-xl font-medium text-sm transition-all border ${
+                    className={`snap-center shrink-0 text-left px-4 py-3.5 rounded-xl font-medium text-sm transition-all border-2 ${
                       activeRegion === region
-                        ? "bg-[#0B1F4B] text-white border-[#0B1F4B] shadow-sm"
-                        : "bg-white text-[#0B1F4B] border-[#E8E0D4] hover:border-[#C9A84C]"
+                        ? "bg-gradient-to-r from-[#0B1F4B] to-[#1A3D7A] text-white border-[#0B1F4B] shadow-lg shadow-[#0B1F4B]/20"
+                        : "bg-white text-[#0B1F4B] border-gray-200 hover:border-[#C9A84C] hover:shadow-md"
                     }`}
                   >
-                    {region}
+                    <div className="flex items-center gap-2">
+                      <MapPin size={14} className={activeRegion === region ? "text-[#C9A84C]" : "text-[#C9A84C]"} />
+                      {region}
+                    </div>
                   </button>
                 ))}
               </div>
 
-              {/* Right Column: Dynamic Region Officers Grid */}
+              {/* Right Column: Dynamic Region Officers Grid - Modern */}
               <div className="lg:col-span-3">
-                <div className="bg-white rounded-2xl p-6 md:p-8 border border-[#E8E0D4] shadow-sm min-h-[300px]">
-                  <div className="border-b border-gray-100 pb-4 mb-6 flex justify-between items-center">
-                    <h3 className="font-display text-xl font-bold text-[#0B1F4B]">
-                      {activeRegion === "CAR" 
-                        ? "Cordillera Administrative Region (CAR)" 
-                        : activeRegion === "NCR" 
-                        ? "National Capital Region (NCR)" 
-                        : activeRegion === "NIR"
-                        ? "Negros Island Region (NIR)"
-                        : activeRegion === "Region I"
-                        ? "Ilocos Region (Region I)"
-                        : activeRegion === "Region III"
-                        ? "Central Luzon (Region III)"
-                        : activeRegion === "Region IV-A"
-                        ? "CALABARZON (Region IV-A)"
-                        : activeRegion === "Region IV-B"
-                        ? "MIMAROPA (Region IV-B)"
-                        : activeRegion === "Region V"
-                        ? "Bicol Region (Region V)"
-                        : activeRegion === "Region VI"
-                        ? "Western Visayas (Region VI)"
-                        : activeRegion === "Region VII"
-                        ? "Central Visayas (Region VII)"
-                        : activeRegion === "Region VIII"
-                        ? "Eastern Visayas (Region VIII)"
-                        : activeRegion === "Region IX"
-                        ? "Zamboanga Peninsula (Region IX)"
-                        : activeRegion === "Region X"
-                        ? "Northern Mindanao (Region X)"
-                        : activeRegion === "Region XI"
-                        ? "Davao Region (Region XI)"
-                        : activeRegion === "Region XII"
-                        ? "SOCCSKSARGEN (Region XII)"
-                        : activeRegion === "Region XIII"
-                        ? "CARAGA (Region XIII)"
-                        : `${activeRegion} Chapter`} Officers
-                    </h3>
-                    <span className="text-xs font-semibold bg-[#C9A84C]/20 text-[#0B1F4B] px-3 py-1 rounded-full">
+                <div className="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-shadow duration-500 min-h-[300px]">
+                  <div className="border-b border-gray-100 pb-4 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <div>
+                      <h3 className="font-display text-xl md:text-2xl font-bold text-[#0B1F4B]">
+                        {getRegionDisplayName(activeRegion)} Officers
+                      </h3>
+                      <p className="text-sm text-gray-500 mt-1">{activeRegion} Chapter</p>
+                    </div>
+                    <span className="inline-flex items-center gap-2 text-xs font-semibold bg-gradient-to-r from-[#C9A84C]/20 to-[#E8C96A]/20 text-[#0B1F4B] px-4 py-2 rounded-full">
+                      <Calendar size={12} />
                       Term 2026–2028
                     </span>
                   </div>
@@ -441,18 +470,30 @@ function OfficersContent() {
                     {regionalChapters[activeRegion]?.map((member, idx) => (
                       <div 
                         key={idx} 
-                        className="bg-[#FAF7F2]/60 rounded-xl p-5 border border-[#E8E0D4]/60 flex flex-col justify-between"
+                        className="group bg-[#FAF7F2] hover:bg-white rounded-2xl p-5 border border-gray-100 hover:border-[#C9A84C]/30 transition-all hover:shadow-lg hover:-translate-y-1"
                       >
-                        <div>
-                          <p className="text-[10px] font-bold text-[#C9A84C] uppercase tracking-wider mb-1.5">{member.role}</p>
-                          <h4 className="font-bold text-base text-[#0B1F4B]">{member.name}</h4>
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <p className="text-[10px] font-bold text-[#C9A84C] uppercase tracking-wider mb-1.5">{member.role}</p>
+                            <h4 className="font-bold text-base text-[#0B1F4B] group-hover:text-[#C9A84C] transition-colors">
+                              {member.name}
+                            </h4>
+                          </div>
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#C9A84C]/10 to-[#E8C96A]/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                            <Star size={14} className="text-[#C9A84C]" />
+                          </div>
                         </div>
-                        {member.institution && (
-                          <p className="text-xs text-gray-400 mt-3 pt-2 border-t border-gray-100/60">{member.institution}</p>
+                        {member.institution && member.institution !== "TBA" && (
+                          <p className="text-xs text-gray-400 mt-3 pt-2 border-t border-gray-100">{member.institution}</p>
+                        )}
+                        {member.name === "TBA" && (
+                          <p className="text-xs text-gray-300 mt-3 pt-2 border-t border-gray-100 italic">Position pending</p>
                         )}
                       </div>
                     )) || (
-                      <p className="text-sm text-gray-400 italic">No officer assignments uploaded yet for this chapter.</p>
+                      <div className="col-span-2 text-center py-12">
+                        <p className="text-sm text-gray-400 italic">No officer assignments uploaded yet for this chapter.</p>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -469,8 +510,11 @@ function OfficersContent() {
 export default function OfficersPage() {
   return (
     <Suspense fallback={
-      <div className="bg-[#FAF7F2] min-h-screen flex items-center justify-center">
-        <div className="text-[#0B1F4B] text-lg font-medium">Loading officers...</div>
+      <div className="bg-white min-h-screen flex items-center justify-center">
+        <div className="text-[#0B1F4B] text-lg font-medium flex items-center gap-3">
+          <div className="w-6 h-6 border-3 border-[#C9A84C] border-t-transparent rounded-full animate-spin" />
+          Loading officers...
+        </div>
       </div>
     }>
       <OfficersContent />

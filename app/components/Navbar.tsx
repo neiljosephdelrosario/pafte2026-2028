@@ -134,47 +134,63 @@ export default function Navbar() {
       {/* Mobile menu */}
       {open && (
         <div className="lg:hidden bg-[#0f2a5e] border-t border-white/10">
-          {navItems.map((item) => (
-            <div key={item.label}>
-              <button
-                className="w-full text-left px-6 py-3 text-white/90 text-sm font-medium flex justify-between items-center hover:bg-white/10"
-                onClick={() =>
-                  setActiveDropdown(activeDropdown === item.label ? null : item.label)
-                }
-              >
-                <span>{item.label}</span>
-                {item.children && (
-                  <ChevronDown
-                    size={14}
-                    className={`transition-transform ${activeDropdown === item.label ? "rotate-180" : ""}`}
-                  />
+          {navItems.map((item) => {
+            // Check if this item has children
+            const hasChildren = item.children && item.children.length > 0;
+            
+            return (
+              <div key={item.label}>
+                {hasChildren ? (
+                  // Render as button with toggle for items with children
+                  <button
+                    className="w-full text-left px-6 py-3 text-white/90 text-sm font-medium flex justify-between items-center hover:bg-white/10"
+                    onClick={() =>
+                      setActiveDropdown(activeDropdown === item.label ? null : item.label)
+                    }
+                  >
+                    <span>{item.label}</span>
+                    <ChevronDown
+                      size={14}
+                      className={`transition-transform ${activeDropdown === item.label ? "rotate-180" : ""}`}
+                    />
+                  </button>
+                ) : (
+                  // Render as Link for items without children
+                  <Link
+                    href={item.href}
+                    className="block px-6 py-3 text-white/90 text-sm font-medium hover:bg-white/10"
+                    onClick={() => setOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
                 )}
-              </button>
-              {item.children && activeDropdown === item.label && (
-                <div className="bg-[#071535]">
-                  {item.children.map((child) =>
-                    child.disabled ? (
-                      <div
-                        key={child.label}
-                        className="pl-10 pr-6 py-1.5 text-xs font-semibold text-[#C9A84C] uppercase tracking-wider"
-                      >
-                        {child.label}
-                      </div>
-                    ) : (
-                      <Link
-                        key={child.label}
-                        href={child.href}
-                        className="block pl-10 pr-6 py-2.5 text-sm text-white/70 hover:text-[#C9A84C]"
-                        onClick={() => setOpen(false)}
-                      >
-                        {child.label}
-                      </Link>
-                    )
-                  )}
-                </div>
-              )}
-            </div>
-          ))}
+                
+                {hasChildren && activeDropdown === item.label && (
+                  <div className="bg-[#071535]">
+                    {item.children!.map((child) =>
+                      child.disabled ? (
+                        <div
+                          key={child.label}
+                          className="pl-10 pr-6 py-1.5 text-xs font-semibold text-[#C9A84C] uppercase tracking-wider"
+                        >
+                          {child.label}
+                        </div>
+                      ) : (
+                        <Link
+                          key={child.label}
+                          href={child.href}
+                          className="block pl-10 pr-6 py-2.5 text-sm text-white/70 hover:text-[#C9A84C]"
+                          onClick={() => setOpen(false)}
+                        >
+                          {child.label}
+                        </Link>
+                      )
+                    )}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
     </nav>
