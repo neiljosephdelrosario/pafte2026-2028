@@ -52,7 +52,6 @@ export default function Footer() {
             {[
               ["Home", "/"],
               ["About PAFTE", "/about"],
-              ["Membership", "/membership"],
               ["Committees", "/committees"],
               ["Officers & Directory", "/officers"],
               ["Resources", "/resources"],
